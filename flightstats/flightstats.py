@@ -6,16 +6,21 @@ Created on Jun 29, 2016
  https://developer.flightstats.com/api-docs/scheduledFlights/v1
 
 '''
+import os
 import requests
 import datetime
 from pprint import pprint
 from pytz import timezone
-from chat.botkit.utils.flightaware_airports import AIRPORTS as FA_AIRPORTS
+from flightstats.flightaware_airports import AIRPORTS as FA_AIRPORTS
+
+APPLICATION_ID = os.environ['FLIGHTSTATS_APP_ID']
+APPLICATION_KEY = os.environ['FLIGHTSTATS_APP_KEY']
+
 
 def send_request(search_url):
     req_url = "https://api.flightstats.com/flex/schedules/rest/v1/json/{}?appId={}&appKey={}&codeType=IATA".format(search_url,
                                                                                                                    APPLICATION_ID,
-                                                                                                                   APPLICATION_KEY) 
+                                                                                                                   APPLICATION_KEY)
     resp = requests.get(req_url)
     if resp.status_code == requests.codes.ok:  # @UndefinedVariable pylint:disable=no-member
         return resp.json()
@@ -35,7 +40,7 @@ def arrivals(from_airport, to_airport, arrival_date):
                                                                                                                     arrival_day=arrival_date.day)
     content = send_request(search_url)
     return content
-    
+
 def departures(from_airport, to_airport, departure_date):
     """
         finds departure
@@ -64,11 +69,11 @@ def _helper_results_from_flightstats(response, airline, sort_by_key):
         # filter down by airline
         if airline is not None:
             response['flights'] = [flight for flight in response['flights'] if flight['carrierFsCode'] == airline]
-    
+
     response['airports'] = {airport['fs']: airport for airport in response['appendix']['airports']}
-    response['airlines'] = {airline['fs']: airline for airline in response['appendix']['airlines']}    
+    response['airlines'] = {airline['fs']: airline for airline in response['appendix']['airlines']}
     return response
-        
+
 
 def _helper_build_arrival_departure_text(flight_info, airline, airports, airlines, is_arrival):
     if is_arrival:
@@ -77,7 +82,7 @@ def _helper_build_arrival_departure_text(flight_info, airline, airports, airline
     else:
         date_key = 'departureTime'
         location_key = 'arrivalAirportFsCode'
-        
+
     related_datetime = datetime.datetime.strptime(flight_info[date_key], "%Y-%m-%dT%H:%M:%S.%f")
     related_city = airports[flight_info[location_key]]['city']
     resp_text = ''
@@ -94,7 +99,7 @@ def _helper_build_arrival_departure_text(flight_info, airline, airports, airline
     else:
         resp_text += " to {} will depart at {}".format(related_city, datetime.datetime.strftime(related_datetime, '%H:%M'))
     return resp_text
-    
+
 
 def arrivals_to_texts(from_airport, to_airport, airline=None, max_results=5):
     """ converts arrivals response from flightstats to list of texts """
@@ -111,9 +116,9 @@ def arrivals_to_texts(from_airport, to_airport, airline=None, max_results=5):
             responses.append(resp_text)
         return responses
     return "did not find any results"
-       
+
 def departures_to_texts(from_airport, to_airport, airline=None, max_results=5):
-    """ 
+    """
         converts departures response from flightstats to list of texts
     """
     departure_date = datetime.datetime.now()
@@ -140,6 +145,6 @@ def demo_arrivals():
     to_airport = "JFK"
     pprint(arrivals_to_texts(from_airport, to_airport, airline="B6"))
 
-    
+
 if __name__ == '__main__':
     demo_departures()

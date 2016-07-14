@@ -9,17 +9,20 @@ Docs are here: https://flightaware.com/commercial/flightxml/documentation2.rvt
 '''
 from __future__ import unicode_literals, division, print_function
 
+import os
 from pprint import pprint
 import datetime
 import calendar
 from pytz import timezone as pytz_timezone
 
 import requests
-from chat.botkit.utils.airports_icao_to_iata import AIRPORTS_IATA_TO_ICAO, AIRPORTS_ICAO_TO_IATA
-from chat.botkit.utils.flightaware_airports import AIRPORTS as FA_AIRPORTS
+from flightstats.airports_icao_to_iata import AIRPORTS_IATA_TO_ICAO, AIRPORTS_ICAO_TO_IATA
+from flightstats.flightaware_airports import AIRPORTS as FA_AIRPORTS
 
 DEFAULT_NUMBER_OF_SEARCH_RESULTS = 5
 
+USERNAME = os.environ['FLIGHTAWARE_USERNAME']
+API_KEY = os.environ['FLIGHTAWARE_API_KEY']
 URL = "http://flightxml.flightaware.com/json/FlightXML2/"
 
 def flight_aware(command, params):
@@ -278,7 +281,7 @@ def departures_to_text(airport_code):
     if not results:
         response.append("did not get any results")
     else:
-        
+
         for res in results:
             flight_info = res.get('flight_info')
             if flight_info:
@@ -381,7 +384,7 @@ def fa_api_scheduled(airport, how_many, filter_enum="", offset=0, filter_ident=N
     filter_ident - Each result has a flight number that looks like this:   'ident': 'QTR579'.
                    Use filter_ident to filter only 'ident's that start with your provided string.
                    Allows for searching for airlines and even specific flights.
-                   
+
     Response Example: [{u'aircrafttype': u'AT72',
                   u'destination': u'VICG',
                   u'destinationCity': u'Chandigarh',
@@ -490,7 +493,7 @@ def get_flight_status_data(body):
     airline_info = AirlineFlightInfoResult.get('AirlineFlightInfoResult', {})
     if not airline_info or not extended_info:
         return
-    
+
     # origin
     orig_airport_icao_code = extended_info.get('origin')
     orig_airport_code = AIRPORTS_ICAO_TO_IATA.get(orig_airport_icao_code, orig_airport_icao_code)
@@ -513,7 +516,7 @@ def get_flight_status_data(body):
         destination_tz = None
     estimatedarrivaltime = extended_info['estimatedarrivaltime']
     arrival_date = datetime.datetime.fromtimestamp(estimatedarrivaltime, destination_tz)
-    
+
     return dict(
         flight_number=flight_number,
         flight_number_only=body['Number'],
@@ -549,7 +552,7 @@ def demo_fa_api_airline_flight_schedules():
 
 if __name__ == '__main__':
     pprint(departures_to_text("TLV"))
-    
+
 #     pprint(find_next_flight("QTR1"))
 #     pprint(flight_info_extended("DAL2824-1463808481-airline-0168"))
 #     pprint(flight_info_extended("QTR1", departure_date=datetime.date(2016, 6, 14)))
