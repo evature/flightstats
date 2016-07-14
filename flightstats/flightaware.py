@@ -7,7 +7,7 @@ Created on May 18, 2016
 Docs are here: https://flightaware.com/commercial/flightxml/documentation2.rvt
 
 '''
-from __future__ import unicode_literals, division, print_function
+from __future__ import unicode_literals, division, print_function, absolute_import
 
 import os
 from pprint import pprint

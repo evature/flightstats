@@ -6,6 +6,8 @@ Created on Jun 29, 2016
  https://developer.flightstats.com/api-docs/scheduledFlights/v1
 
 '''
+from __future__ import absolute_import
+
 import os
 import requests
 import datetime
