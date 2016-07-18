@@ -487,11 +487,15 @@ def get_flight_status_data(body):
 
     FlightInfoExResult = flight_info_extended(faFlightID, departure_date=departure_date, arrival_date=arrival_date)
 
-    extended_info = FlightInfoExResult.get('FlightInfoExResult', {}).get('flights', [{}])[0]
+    flights = FlightInfoExResult.get('FlightInfoExResult', {}).get('flights')
+    extended_info = flights[0] if flights else None
+    if not extended_info:
+        return
+    
     faFlightID = extended_info.get('faFlightID')
     AirlineFlightInfoResult = flight_airline_info(faFlightID)
     airline_info = AirlineFlightInfoResult.get('AirlineFlightInfoResult', {})
-    if not airline_info or not extended_info:
+    if not airline_info:
         return
 
     # origin
