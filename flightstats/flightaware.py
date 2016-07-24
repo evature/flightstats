@@ -363,6 +363,7 @@ def fa_api_airline_flight_schedules(start_date, end_date, origin=None, destinati
         if arrival_time:
             flight['arrival_time'] = datetime.datetime.fromtimestamp(arrival_time)
     scheduled = sorted(scheduled, key=lambda res: res.get('departuretime'))
+    scheduled = [flight for flight in scheduled if not flight['actual_ident']] # return only flight number of not co-shared flights
     return scheduled
 
 def fa_api_scheduled(airport, how_many, filter_enum="", offset=0, filter_ident=None):
@@ -494,8 +495,8 @@ def get_flight_status_data(body):
     
     faFlightID = extended_info.get('faFlightID')
     AirlineFlightInfoResult = flight_airline_info(faFlightID)
-    airline_info = AirlineFlightInfoResult.get('AirlineFlightInfoResult', {})
-    if not airline_info:
+    fa_airline_info = AirlineFlightInfoResult.get('AirlineFlightInfoResult', {})
+    if not fa_airline_info:
         return
 
     # origin
@@ -523,19 +524,19 @@ def get_flight_status_data(body):
 
     return dict(
         flight_number=flight_number,
-        flight_number_only=body['Number'],
+        number=body['Number'],
         airline_name=body['Name'],
         departure_airport={
             "airport_code": orig_airport_code,
             "city":extended_info['originName'],
-            "gate":airline_info['gate_orig'],
-            "terminal":airline_info['terminal_orig']
+            "gate":fa_airline_info['gate_orig'],
+            "terminal":fa_airline_info['terminal_orig']
         },
         arrival_airport={
             "airport_code": dest_airport_code,
             "city": extended_info.get('destinationName'),
-            "gate": airline_info['gate_dest'],
-            "terminal": airline_info['terminal_dest']
+            "gate": fa_airline_info['gate_dest'],
+            "terminal": fa_airline_info['terminal_dest']
         },
         flight_schedule={
             "departure_time": depart_date,
