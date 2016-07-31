@@ -503,7 +503,7 @@ def get_flight_status_data(body):
     orig_airport_icao_code = extended_info.get('origin')
     orig_airport_code = AIRPORTS_ICAO_TO_IATA.get(orig_airport_icao_code, orig_airport_icao_code)
     if orig_airport_code in FA_AIRPORTS:
-        origin_tz = pytz_timezone(FA_AIRPORTS[orig_airport_code]['timezone'].lstrip(':'))
+        origin_tz = pytz_timezone(FA_AIRPORTS[orig_airport_code]['timezone'])
     else:
         origin_tz = None
     filed_departuretime = extended_info['filed_departuretime']
@@ -516,7 +516,7 @@ def get_flight_status_data(body):
     destination_icao_code = extended_info.get('destination')
     dest_airport_code = AIRPORTS_ICAO_TO_IATA.get(destination_icao_code, destination_icao_code)
     if dest_airport_code in FA_AIRPORTS:
-        destination_tz = pytz_timezone(FA_AIRPORTS[dest_airport_code]['timezone'].lstrip(':'))
+        destination_tz = pytz_timezone(FA_AIRPORTS[dest_airport_code]['timezone'])
     else:
         destination_tz = None
     estimatedarrivaltime = extended_info['estimatedarrivaltime']

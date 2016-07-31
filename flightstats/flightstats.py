@@ -106,7 +106,7 @@ def _helper_build_arrival_departure_text(flight_info, airline, airports, airline
 def arrivals_to_texts(from_airport, to_airport, airline=None, max_results=5):
     """ converts arrivals response from flightstats to list of texts """
     arrival_date = datetime.datetime.now()
-    destination_tz = timezone(FA_AIRPORTS[from_airport]['timezone'].lstrip(':'))
+    destination_tz = timezone(FA_AIRPORTS[from_airport]['timezone'])
     arrival_date = destination_tz.localize(arrival_date)
     content = arrivals(from_airport, to_airport, arrival_date)
     content = _helper_results_from_flightstats(response = content, airline = airline, sort_by_key = 'arrivalTime')
@@ -124,7 +124,7 @@ def departures_to_texts(from_airport, to_airport, airline=None, max_results=5):
         converts departures response from flightstats to list of texts
     """
     departure_date = datetime.datetime.now()
-    destination_tz = timezone(FA_AIRPORTS[from_airport]['timezone'].lstrip(':'))
+    destination_tz = timezone(FA_AIRPORTS[from_airport]['timezone'])
     departure_date = destination_tz.localize(departure_date)
     content = departures(from_airport, to_airport, departure_date)
     content = _helper_results_from_flightstats(response = content, airline = airline, sort_by_key = 'departureTime')
