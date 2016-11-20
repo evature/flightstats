@@ -2893,7 +2893,7 @@ AIRPORTS = {
         'YZV'	:	{"latitude": 50.223333, "timezone": "America/Toronto", "name": "Sept", "longitude": -66.265556, "location": "Sept-Iles, Quebec"},
         'HNB'	:	{"latitude": 38.2490278, "timezone": "America/New_York", "name": "Huntingburg", "longitude": -86.9536944, "location": "Huntingburg, IN"},
         'YMH'	:	{"latitude": 52.303, "timezone": "America/St_Johns", "name": "Mary's Harbour", "longitude": -55.847, "location": "Mary's Harbour, Newfoundland and Labrador"},
-        'HND'	:	{"latitude": 35.9728611, "timezone": "America/Los_Angeles", "name": "Henderson Executive", "longitude": -115.1344444, "location": "Las Vegas, NV"},
+        'HND'	:	{"latitude": 35.5488, "timezone": "Asia/Tokyo", "name": "Haneda Airport", "longitude": 139.784, "location": "Tokyo, Japan"},
         'KHY'	:	{"latitude": 38.427453, "timezone": "Asia/Tehran", "name": "Khoy", "longitude": 44.973575, "location": "Khoy"},
         'YMJ'	:	{"latitude": 50.330278, "timezone": "America/Regina", "name": "CFB Moose Jaw (Moose Jaw/Air Vice Marshal C.M. McEwen)", "longitude": -105.559167, "location": "Moose Jaw, Saskatchewan"},
         'KHR'	:	{"latitude": 47.246667, "timezone": "Asia/Ulaanbaatar", "name": "Kharkhorin", "longitude": 102.826111, "location": "Kharkhorin, Ovorkhangai"},
