@@ -480,6 +480,7 @@ def fa_api_arrivals(airport, H):
         offset    int    must be an integer value of the offset row count you want the search to start at. Most requests should be 0.
     """
 
+
 def get_flight_status_data(body):
     """ Get data about flight from FlightAware API - and format the output in a FB Flight update format """
     flight_number = '{}{}'.format(body['ICAO'], body['Number'])
@@ -501,7 +502,7 @@ def get_flight_status_data(body):
 
         faFlightID = next_flight.get('InFlightInfoResult', {}).get('faFlightID')
         if not faFlightID:
-            return
+            return {}
     else:
         faFlightID = flight_number
 
@@ -511,13 +512,13 @@ def get_flight_status_data(body):
     flights = FlightInfoExResult.get('FlightInfoExResult', {}).get('flights')
     extended_info = flights[0] if flights else None
     if not extended_info:
-        return
+        return {}
     
     faFlightID = extended_info.get('faFlightID')
     AirlineFlightInfoResult = flight_airline_info(faFlightID)
     fa_airline_info = AirlineFlightInfoResult.get('AirlineFlightInfoResult', {})
     if not fa_airline_info:
-        return
+        return 
 
     # origin
     orig_airport_icao_code = extended_info.get('origin')

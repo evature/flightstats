@@ -2768,6 +2768,7 @@ AIRPORTS_ICAO_TO_IATA = {
     "MMPB"    :    "PBC",
     "CZUM"    :    "ZUM",
     "FAJS"    :    "JNB",
+    "FAOR"    :    "JNB", # IFTAH - this was missing 
     "MMPA"    :    "PAZ",
     "MMPR"    :    "PVR",
     "KCVN"    :    "CVN",
