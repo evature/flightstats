@@ -6268,6 +6268,9 @@ AIRPORTS = {
         'KRI'	:	{"latitude": -7.424722, "timezone": "Pacific/Port_Moresby", "name": "Kikori", "longitude": 144.249722, "location": "Kikori"},
         'MTT'	:	{"latitude": 18.103419, "timezone": "America/Mexico_City", "name": "Minatitlan/Coatzacoalcos Nat'l", "longitude": -94.580681, "location": "Minatitlan, Veracruz"},
         'HEA'	:	{"latitude": 34.210017, "timezone": "Asia/Kabul", "name": "Herat", "longitude": 62.2283, "location": "Herat"},
+
+# added manually        
+        'LIM'   :   {"latitude": -12.024, "longitude": -77.11203, "timezone": "America/Lima", "name": "Jorge Chávez International Airport", "location": "Callao, Peru"}, 
 }
 
 MISSING_AIRPORT_CODES = ["PEY","PCQ","NDP","NDS","KYO","KYN","KYL","XMP","SPT","SPV","KYX","SPO","SPD","JNP","XBL","PQM","JNA","PQS","JNH","BEJ","BEK","BEO","BEE",
